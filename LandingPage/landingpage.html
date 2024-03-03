@@ -1,0 +1,29 @@
+<!DOCTYPE html><!-- Every HTML page must have this at the top -->
+<html><!-- everything must be inside of the <html></html> tags. Almost every tag that you put must also be closed (<html> opens, </html> closes) -->
+<head> <!-- the head is where you put things unrelated to what shows up on the main page, such as the title that appears in the tab, or linking your css
+and javascript files (you can also directly but css and javascript code here too, but linking external files is neater -->
+<title> Login Select </title> <!-- the name that appears on the tab in the browser -->
+
+<link rel="stylesheet" href="landingpage.css"> <!-- links the css page --> <!-- for this page i won't be relying on css too much since there aren't that many items -->
+</head>
+
+<body> <!-- the body is where almost everything that appears on the page goes. you can also put some default style-related stuff in the tag that will effect everything
+inside the body as default (for example, setting the font to 20 in the body tag makes the default text size 20 automatically), although this can be redundant if you're 
+using css -->
+
+<img src = "pollaris logo.png" class = "center"> <!-- a class is like a marker you can put. in css, you can set settings related to a class and it'll effect all items with that class name -->
+
+<p>Choose Your Role: </p> <!-- a paragraph. pretty much just put it around text whenever you want to style it -->
+<!-- there's more than one unit you can scale font size by, but usually "rem" is the best thing to use since it'll automatically scale with the size of the browser -->
+
+<br> <!-- this adds a vertical space in the page. like the equivalent of hitting enter when you're typing -->
+
+<button onclick = "window.location.href = 'test1.html';"> Instructor</button> 
+<!-- clicking will send you to the link -->
+<button onclick = "window.location.href = 'test2.html';"> Student </button>
+<!-- you can put a link to a real website too. but if you're using other html pages you have to type the full address for the file. for example, if
+test1 and test2 were in a folder called "thisfolder", you would need to put "thisfolder\" before them -->
+
+
+</body>
+</html>
