@@ -1,0 +1,1 @@
+Pollaris is a new online service that runs on web browsers with database support from Firebase. It allows teachers to create quizzes that Students can complete on their devices within a classroom setting.
