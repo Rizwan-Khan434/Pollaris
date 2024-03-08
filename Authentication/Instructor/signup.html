@@ -12,18 +12,20 @@
 		<a href = "../../LandingPage/landingpage.html"
 			<img src="../../LandingPage/pollaris_logo_black.png" alt="Pollaris Logo" class="logo"> 
 		</a>
-	</div>
-    <div class="form-wrap">
+   <div class="form-wrap">
         <form id="signup-form">
             <h1>Sign Up</h1> <br> <br>
             <div class="input-box">
-                <input type="text" id="uname" name="uname" placeholder="Username" required>
+                <input type="text" id="uname" name="uname" placeholder="Email" required>
             </div> <br>
             <div class="input-box">
                 <input type="password" id="pword" name="pword" placeholder="Password" required> 
+            </div> <br>
+            <div class="input-box">
+                <input type="password" id="confirm-pword" name="confirm-pword" placeholder="Confirm Password" required> 
             </div> <br> <br>
             <button type="submit" class="button">Sign Up</button>
-            <div class="register-login">
+             <div class="register-login">
 				<p>Already a member? <a href="login.html">Login</a> </p>
 			</div>
         </form>
@@ -61,6 +63,12 @@
             // Get user input values
             const email = document.getElementById('uname').value;
             const password = document.getElementById('pword').value;
+
+	    // Validate password match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please try again.');
+                return;
+            }
 
             // Sign up user with email and password
             createUserWithEmailAndPassword(auth, email, password)
