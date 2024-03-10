@@ -1,19 +1,71 @@
-.center {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: "border-box";
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background-color:rgba(236, 242, 245, 0.685);
+}
+.logo {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
 }
-
 body {
 	font-size: 2rem;
 	text-align: center;
 }
-
+.header {
+	font-size: 87px;
+    text-align: center;
+	/*font-weight:bold;*/
+}
 button {
-	height: 60px;
-	width: 200px;
+	height: 550px;
+	width: 450px;
 	font-size: 1.5rem;
 	margin-right: 30px;
 	margin-left: 30px;
+	padding: 0;
+	position: relative;
+	margin:auto;
+    display: block;
+	padding-right: 10px;
+	background-color: white;
+	border-radius: 12px;
+	box-shadow: 0 0 10px black;
+	outline: none;
+	font-size: 66px;
+	font-weight: none;
+
+}
+.user-button:hover {
+	border: 10px solid cadetblue; 
+	box-shadow: 0 0 35px cadetblue;
+}
+.buttons {
+	display: flex;
+	margin: auto;
+	justify-content: center;
+	align-items: center;
+}
+#instructor img {
+	display: block;
+	height: 440px;
+	width: 300px;
+	padding: 1px;
+	margin: auto;
+}
+#student img {
+	display: block;
+	height: 440px;
+	width: 300px;
+	padding: 1px;
+	margin: auto;
+}
+.user {
+	position: relative;
+	width: 15%;
+	margin: 10px 0;
+	padding-right: 0px;
 }

@@ -1,0 +1,92 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+.logo-container {
+    display:grid;
+    margin-left: 0%;
+    margin-top: 0%;
+    width: 0%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: black;
+    background:whitesmoke;
+    background-position: center;
+    background-size: cover;
+}
+.stud-names {
+    display: flex;
+}
+.student {
+    width: 500px;
+    height: 400px;
+    background: rgb(185, 203, 224);
+    color: #001;
+    border:none;
+    padding: auto;
+    border-radius: 10px;
+    padding: 30px 40px;
+    box-shadow: 0 0 10px #000;
+}
+.student h1 {
+    font-size: 36px;
+    text-align: center;
+}
+.student .names {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+    padding-right: 10px;
+}
+.names input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    padding: 20px 45px 20px 20px;
+    margin:auto;
+    display: block;
+}
+.student .quiz-code {
+    position:relative;
+    width: 100%;
+    margin: 10px 0;
+    padding-right: 10px;
+}
+.quiz-code input {
+    width: 80%;
+    height: 100%;
+    background: transparent;
+    outline: none;
+    border: 2px solid #fff;
+    border-radius: 40px;
+    padding: 20px 45px 20px 20px;
+    margin:auto;
+    display: block;
+}
+.student .button {
+    width: 80%;
+    height: 40px;
+    background: #fff;
+    border-radius: 40px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px #000;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin:auto;
+    display: block;
+}
