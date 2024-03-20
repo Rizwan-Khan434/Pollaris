@@ -1,5 +1,3 @@
-
-  /* Resetting default margin and padding */
   body, html {
     margin: 0;
     padding: 0;
@@ -48,7 +46,7 @@
 
   .content {
     display: flex;
-    flex-grow: 1; /* Fill remaining vertical space */
+    flex-grow: 1;
   }
 
   .profile-container {
