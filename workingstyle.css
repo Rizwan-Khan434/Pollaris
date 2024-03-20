@@ -1,0 +1,121 @@
+
+  /* Resetting default margin and padding */
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+
+  nav {
+    background-color: #888;
+    color: white;
+    padding: 20px;
+    overflow: hidden;
+  }
+
+  nav img {
+    float: left;
+    height: 20px;
+    margin-right: 20px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+  }
+
+  nav ul li {
+    display: inline;
+    margin-right: 20px;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+
+  nav ul li a:hover {
+    text-decoration: underline;
+  }
+
+  .content {
+    display: flex;
+    flex-grow: 1; /* Fill remaining vertical space */
+  }
+
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+    padding: 20px;
+    max-width: 25%;
+    align-items: center;
+  }
+
+  .profile {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .profile img {
+    width: 175px;
+    height: 175px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .profile-label {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+
+
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .buttons-inner {
+    display: flex;
+    flex-direction: horizontal;
+    align-items: flex-start
+  }
+
+  .button {
+    background-color: #435453;
+    color: white;
+    border: none;
+    padding: 30px 100px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .recent-button{
+    background-color: #aaa;
+    color: #444;
+    border: none;
+    padding: 70px 70px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
