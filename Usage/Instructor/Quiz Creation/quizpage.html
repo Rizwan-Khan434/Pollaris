@@ -1,0 +1,68 @@
+<html>
+<head>
+    <title>Quiz Creation - Pollaris</title>
+    <link rel="stylesheet" href="quizpage.css">
+    <script src="quizpage.js"></script>
+</head>
+<body>
+    <img src="logo.png" style="height:100px; width:200px;" />
+    <button onclick="publish()" class="do" style="float:right;">Publish</button>
+
+    <br>
+    <center><input type="text" class="question" style="text-align:center" placeholder="Quiz Name" /></center>
+    <br>
+    <br>
+    <br>
+
+    <center>
+        <ol id="questionsList"> <!--Seems weird, but by using an ordered list, question numbers will be handled automatically-->
+            <li>
+                <div class="questionTemplate" style="background-color:white">
+                    <br />
+                    <br />
+                    <input type="text" class="question" placeholder="What would you like to ask?">
+                    <select class="questionType">
+                        <option>Select all that apply</option>
+                        <option>Multiple choice</option>
+                    </select>
+                    <br>
+                    <br>
+                    <table>
+                        <tr>
+                            <td><input type="text" class="answer" placeholder="Enter first answer"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="answer" placeholder="Enter second answer"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="answer" placeholder="Enter third answer"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="answer" placeholder="Enter fourth answer"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="answer" placeholder="Enter fifth answer"></td>
+                            <td><input type="checkbox"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <br>
+                    <br>
+
+                    <button onclick="addQuestion()">Add Question</button>
+                    <button onclick="removeQuestion(this)">Remove Question</button>
+                    <br>
+                    <hr />
+                </div>
+               
+            </li>
+        </ol>
+    </center>
+
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+body
+{
+    background:whitesmoke;
+}
+
+.do
+{
+    background-color: white;
+    font-size:2rem;
+    border-radius:20px;
+    width:200px;
+    height:100px;
+
+}
+.do:hover {
+    border: 5px solid cadetblue;
+    box-shadow: 0 0 20px cadetblue;
+}
+
+.question {
+    height: 30px;
+    width: 500px;
+    font-size: 1.5rem;
+    vertical-align: middle;
+}
+
+.header
+{
+    font-size:2rem;
+}
+
+.questionType {
+    height: 30px;
+    width:200px;
+    vertical-align: middle;
+    font-size:1rem;
+}
+
+.answer
+{
+    width:500px;
+    height:25px;
+    
+}
+
+table {
+    border: 0;
+}
+
+ol
+{
+    font-size:2rem;
+}
