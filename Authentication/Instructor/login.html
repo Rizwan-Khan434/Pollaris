@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title> Login - Pollaris </title>
 	<link rel="stylesheet" href="auth.css">
+    <script type="module" src="login.js"></script>
 </head>
 <body>
 	<div class="logo-container">
 		<a href = "../../LandingPage/landingpage.html"
-			<img src="../../LandingPage/pollaris_logo_black.png" alt="Pollaris Logo" class="logo"> 
+			<img src="../../LandingPage/pollaris_logo.png" alt="Pollaris Logo" class="logo"> 
 		</a>
    	</div>
 	<div class="form-wrap">
@@ -31,56 +32,5 @@
 			</div>
 		</form>
 	</div>
-    <script type="module">
-        // Import Firebase modules directly from URLs
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
-
-        // Firebase configuration
-        const firebaseConfig = {
-        apiKey: "AIzaSyDGUnRul8V9HQjbjHqeve6To2np6puXtWE",
-		  authDomain: "pollaris-fa5dc.firebaseapp.com",
-		  databaseURL: "https://pollaris-fa5dc-default-rtdb.firebaseio.com",
-		  projectId: "pollaris-fa5dc",
-		  storageBucket: "pollaris-fa5dc.appspot.com",
-		  messagingSenderId: "826719629611",
-		  appId: "1:826719629611:web:369cf60056d2e4ffd2556e",
-		  measurementId: "G-91R1GDZF6L"
-        };
-
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-		const database = getDatabase(app);
-
-        // Reference to the login form
-        const loginForm = document.getElementById('login-form');
-
-        // Add event listener for form submission
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission
-
-            // Get user input values
-            const email = document.getElementById('uname').value;
-            const password = document.getElementById('pword').value;
-
-            // Sign in user with email and password
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Log in successfully
-                    const user = userCredential.user;
-                    alert('Login successfully!');
-                })
-                .catch((error) => {
-                    // Handle errors
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(errorMessage);
-                });
-        });
-
-	
-    </script>
 </body>
 </html>

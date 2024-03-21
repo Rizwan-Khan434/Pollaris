@@ -27,7 +27,6 @@ button {
 	box-shadow: 0 0 10px black;
 	outline: none;
 	font-weight: none;
-
 }
 .user-button:hover {
 	border: 10px solid cadetblue; 
