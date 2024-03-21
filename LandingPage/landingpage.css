@@ -12,7 +12,6 @@
   width: 50%;
 }
 body {
-	font-size: 2rem;
 	text-align: center;
 }
 .header {
@@ -37,7 +36,6 @@ button {
 	outline: none;
 	font-size: 66px;
 	font-weight: none;
-
 }
 .user-button:hover {
 	border: 10px solid cadetblue; 
