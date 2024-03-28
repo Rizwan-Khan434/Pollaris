@@ -27,12 +27,6 @@ function publish() {
     alert("Quiz published successfully!");
 }
 
-
-
-
-
-
-
 var questionCounter = 1;
 
 function addQuestion() {
