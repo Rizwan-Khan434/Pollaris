@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Creation - Pollaris</title>
+    <link rel="stylesheet" href="quizpage.css">
+    <script src="work.js"></script>
+   <!-- <script src="quizStore.js"></script> -->
+</head>
+<body>
+    <img src="logo.png" style="height:100px; width:200px;" />
+    <div id="randomCodeDisplay"></div> 
+    <button id="publishButton" class="do" style="float:right;">Publish</button>
+
+    <br>
+    <center><input type="text" class="question" style="text-align:center" placeholder="Quiz Name" /></center>
+    <br>
+    <br>
+    <br>
+
+    <center>
+        <ol id="questionsList">
+            <!-- Removed the single question template from here -->
+        </ol>
+    </center>
+
+    <button id="addQuestionButton">Add Question</button>
+    <hr />
+
+    <script type="module">
+        // Import Firebase modules directly from URLs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "pollaris-fa5dc.firebaseapp.com",
+            databaseURL: "https://pollaris-fa5dc-default-rtdb.firebaseio.com",
+            projectId: "pollaris-fa5dc",
+            storageBucket: "pollaris-fa5dc.appspot.com",
+            messagingSenderId: "826719629611",
+            appId: "1:826719629611:web:369cf60056d2e4ffd2556e",
+            measurementId: "G-91R1GDZF6L"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        function publish() {
+    var quizName = document.querySelector('.question').value.trim();
+
+    if (quizName === '') {
+        alert("Please enter a quiz name.");
+        return; 
+    }
+
+    var quizCode = document.getElementById('randomCodeDisplay').innerText.split(':')[1].trim(); // Get the quiz code
+    var quizRef = ref(database, `quizzes/${quizCode}/${quizName}/questions`); // Reference to the questions node
+
+    var questions = document.querySelectorAll('.questionTemplate');
+
+    questions.forEach(function(question, index) {
+        var questionInput = question.querySelector('.question');
+        var questionText = questionInput.value.trim();
+
+        var answerInputs = question.querySelectorAll('.answer');
+        var checkboxes = question.querySelectorAll('.checkbox'); // Get the checkboxes
+        var answers = {};
+        console.log('Number of answer inputs:', answerInputs.length);
+        console.log('Number of checkboxes:', checkboxes.length);
+
+        answerInputs.forEach(function(answer, index) {
+            answers[`answer${index + 1}`] = {
+              text:  answer.value.trim(),
+              checked: checkboxes[index].checked // Store the checked state
+            };
+        });
+
+        // Save the question data to Firebase with the question number
+        var newQuestionRef = push(quizRef);
+        var questionKey = newQuestionRef.key;
+
+        var questionData = {
+            questionNumber: index + 1, // Add the question number to the question data
+            questionText: questionText,
+            answers: answers
+        };
+
+        set(newQuestionRef, questionData)
+            .catch(function(error) {
+                console.error("Error saving question: ", error);
+            });
+    });
+
+    alert("Quiz published successfully!");
+}
+
+
+
+        function addQuestion() {
+            var questionsList = document.getElementById('questionsList');
+            var questionTemplate = createQuestionTemplate();
+            questionsList.appendChild(questionTemplate);
+        }
+
+        function removeQuestion(button) {
+            var questionItem = button.parentNode; // Get the parent <li> of the button
+            questionItem.remove(); // Remove the question item
+        }
+
+function createQuestionTemplate() {
+    var questionTemplate = document.createElement('li');
+    questionTemplate.classList.add('questionTemplate');
+
+    var innerHTML = `
+        <div style="background-color:white">
+            <br />
+            <br />
+            <input type="text" class="question" placeholder="What would you like to ask?">
+            <select class="questionType">
+                <option>Select all that apply</option>
+                <option>Multiple choice</option>
+            </select>
+            <br>
+            <br>
+            <table>
+                <tr>
+                    <td><input type="text" class="answer" placeholder="Enter first answer"></td>
+                    <td><input type="checkbox" class="checkbox"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="answer" placeholder="Enter second answer"></td>
+                    <td><input type="checkbox" class="checkbox"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="answer" placeholder="Enter third answer"></td>
+                    <td><input type="checkbox" class="checkbox"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="answer" placeholder="Enter fourth answer"></td>
+                    <td><input type="checkbox" class="checkbox"></td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="answer" placeholder="Enter fifth answer"></td>
+                    <td><input type="checkbox" class="checkbox"></td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+            <button class="removeQuestionButton">Remove Question</button>
+            <br>
+            <hr />
+        </div>
+    `;
+
+    questionTemplate.innerHTML = innerHTML;
+
+    return questionTemplate;
+}
+
+
+        // Add event listener for the publish button
+        document.getElementById('publishButton').addEventListener('click', publish);
+
+        // Add event listener for adding question button
+        document.getElementById('addQuestionButton').addEventListener('click', addQuestion);
+
+        //
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('removeQuestionButton')) {
+                removeQuestion(event.target);
+            }
+        });
+    </script>
+</body>
+</html>
