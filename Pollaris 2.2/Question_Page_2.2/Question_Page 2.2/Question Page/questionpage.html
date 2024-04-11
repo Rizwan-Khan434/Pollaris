@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Page</title>
+    <link rel="stylesheet" href="questionpage.css">
+</head>
+<body>
+    <img src="logo.png" style="height:100px; width:200px;" />
+    <p class="name" style="float:right">User's Name</p>
+
+    <br />
+    <br />
+    <br />
+
+    <center>
+        <p class="question">Question will be displayed here</p>
+        <p class="qtype">Either "Multiple Choice" or "Select All That Apply" will be displayed here</p>
+        <br />
+        <br />
+        <div class="questionTemplate" style="background-color:white">
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td><center><p class="answer" id="answer1" onclick="click1()">Test1</p></center></td>
+                    <td><input type="checkbox" id="check1"></td>
+                </tr>
+                <tr>
+                    <td><center><p class="answer" id="answer2" onclick="click2()">Test2</p></center></td>
+                    <td><input type="checkbox" id="check2"></td>
+                </tr>
+                <tr>
+                    <td><center><p class="answer" id="answer3" onclick="click3()">Test3</p></center></td>
+                    <td><input type="checkbox" id="check3"></td>
+                </tr>
+                <tr>
+                    <td><center><p class="answer" id="answer4" onclick="click4()">Test4</p></center></td>
+                    <td><input type="checkbox" id="check4"></td>
+                </tr>
+                <tr>
+                    <td><center><p class="answer" id="answer5" onclick="click5()">Test5</p></center></td>
+                    <td><input type="checkbox" id="check5"></td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+        </div>
+    </center>
+    <div>
+        <button id="submitBtn">Submit Answer</button>
+    </div>
+    <script src="questionpage.js"></script>
+    <script type = "module">
+   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+   import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "pollaris-fa5dc.firebaseapp.com",
+    databaseURL: "https://pollaris-fa5dc-default-rtdb.firebaseio.com",
+    projectId: "pollaris-fa5dc",
+    storageBucket: "pollaris-fa5dc.appspot.com",
+    messagingSenderId: "826719629611",
+    appId: "1:826719629611:web:369cf60056d2e4ffd2556e",
+    measurementId: "G-91R1GDZF6L"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+const quizCode = "16245"; // Replace with the actual code of the quiz
+
+const quizName = "asdfdsf";
+
+const quizRef = ref(database, `quizzes/${quizCode}`);
+
+// Get elements
+const questionElement = document.querySelector('.question');
+const qtypeElement = document.querySelector('.qtype');
+const submitBtn = document.getElementById('submitBtn');
+
+// Listen for changes in the quiz data
+onValue(quizRef, (snapshot) => {
+    console.log(snapshot.val())
+    const quizData = snapshot.val();
+    if (quizData && quizData[quizName] && quizData[quizName].questions) {
+        console.log("There");
+        const questions = Object.values(quizData[quizName].questions); // Assuming "My Quiz" is the key under which your quiz data is stored
+        console.log(questions); 
+        const currentQuestion = questions[0]; // Get the first question
+        displayQuestion(currentQuestion);
+    }
+});
+
+
+// Function to display a question
+function displayQuestion(question) {
+    questionElement.textContent = question.questionText;
+    qtypeElement.textContent = question.questionType;
+
+    // Loop through answers and set text
+    for (let i = 1; i <= 5; i++) {
+        const answerElement = document.getElementById(`answer${i}`);
+        const checkElement = document.getElementById(`check${i}`);
+        if (answerElement && checkElement) {
+            const answerKey = `answer${i}`;
+            answerElement.textContent = question.answers[answerKey].text;
+            checkElement.checked = false; // Clear previous selection
+        }
+    }
+}
+
+// Event listener for submit button
+submitBtn.addEventListener('click', () => {
+    // Logic to submit answers
+    const answers = [];
+    for (let i = 1; i <= 5; i++) {
+        const checkElement = document.getElementById(`check${i}`);
+        if (checkElement.checked) {
+            answers.push(`answer${i}`);
+        }
+    }
+    console.log("Selected answers:", answers); // Example: Output the selected answers
+});
+
+    </script>
+
+</body>
+</html>
