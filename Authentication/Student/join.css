@@ -59,13 +59,13 @@ body {
     margin:auto;
     display: block;
 }
-.student .quiz-code {
+.student .quiz-code, .student .quiz-name {
     position:relative;
     width: 100%;
     margin: 10px 0;
     padding-right: 10px;
 }
-.quiz-code input {
+.quiz-code input, .quiz-name input {
     width: 100%;
     height: 100%;
     background: transparent;
