@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Page</title>
+    <link rel="stylesheet" href="questionpage.css">
+    <script src="questionpage.js"></script>
+</head>
+<body>
+    <img src="logo.png" style="height:100px; width:200px;" />
+    <p class="name" style="float:right">User's Name</p>
+    <br />
+    <br />
+    <br />
+    <div id = "page">
+        <center>
+            <p class="question" id="question"></p>
+            <p class="qtype" id="qtype"> T</p>
+            <br />
+            <br />
+            <div class="questionTemplate" style="background-color:white">
+                <br />
+                <br />
+                <table>
+                    <tr>
+                        <td><center><p class="answer" id="answer1" onclick="click1()">Test1</p></center></td>
+                        <td><input type="checkbox" id="check1"></td>
+                    </tr>
+                    <tr>
+                        <td><center><p class="answer" id="answer2" onclick="click2()">Test2</p></center></td>
+                        <td><input type="checkbox" id="check2"></td>
+                    </tr>
+                    <tr>
+                        <td><center><p class="answer" id="answer3" onclick="click3()">Test3</p></center></td>
+                        <td><input type="checkbox" id="check3"></td>
+                    </tr>
+                    <tr>
+                        <td><center><p class="answer" id="answer4" onclick="click4()">Test4</p></center></td>
+                        <td><input type="checkbox" id="check4"></td>
+                    </tr>
+                    <tr>
+                        <td><center><p class="answer" id="answer5" onclick="click5()">Test5</p></center></td>
+                        <td><input type="checkbox" id="check5"></td>
+                    </tr>
+                </table>
+                <br>
+                <br>
+                <br>
+            </div>
+        </center>
+        <div>
+            <button id="submitBtn">Submit</button>
+            <button id="get-next" onclick="">Next</button>
+        </div>
+    </div>
+    <script type=module>
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDGUnRul8V9HQjbjHqeve6To2np6puXtWE",
+            authDomain: "pollaris-fa5dc.firebaseapp.com",
+            databaseURL: "https://pollaris-fa5dc-default-rtdb.firebaseio.com",
+            projectId: "pollaris-fa5dc",
+            storageBucket: "pollaris-fa5dc.appspot.com",
+            messagingSenderId: "826719629611",
+            appId: "1:826719629611:web:369cf60056d2e4ffd2556e",
+            measurementId: "G-91R1GDZF6L"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        // Calling on the join.HTML page. Once the student submits it will open from here
+        const urlParams = new URLSearchParams(window.location.search);
+        const quizName = urlParams.get("quizName");
+        const quizCode = urlParams.get("quizCode");
+        const quizRef = ref(database, `quizzes/${quizCode}`);
+        var questionsRef;
+        var i = 1;
+        
+        onValue(quizRef, (snapshot) => {
+            console.log(snapshot.val())
+            const quizData = snapshot.val();
+            console.log(quizData);
+            if (quizData && quizData[quizName] && quizData[quizName].questions) {
+                console.log("there");
+                const questions = Object.values(quizData[quizName].questions); // Assuming "My Quiz" is the key under which your quiz data is stored
+                //questionsRef = questions
+                displayQuestion(questions[0]);
+                const nextButton = document.getElementById("get-next");
+                var handler = function() {
+                    if (i < questions.length) {
+                        console.log(questions[i]);
+                        displayQuestion(questions[i]);
+                        i++;
+                        console.log(i);
+                    }
+                    else {
+                        nextButton.removeEventListener("click", handler);
+                        document.getElementById("page").innerHTML = `
+                        <center style="font-family:Arial Rounded MT; font-size = 2.25rem;">
+                            Done!
+                        </center>`
+                    }
+                }
+                nextButton.addEventListener("click", handler);
+            }
+        });
+
+        // Function to display a question
+        function displayQuestion(question) {
+            document.getElementById("question").textContent = question.questionText;
+            //document.getElementById("qtype").textContent = get this from database
+            // Loop through answers and set text
+            for (let i = 1; i <= 5; i++) {
+                var answerElement = document.getElementById(`answer${i}`);
+                var checkElement = document.getElementById(`check${i}`);
+                if (answerElement && checkElement) {
+                    var answerKey = `answer${i}`;
+                    answerElement.textContent = question.answers[answerKey].text;
+                    checkElement.checked = false; // Clear previous selection
+                }
+            }
+            console.log(i);
+        }
+
+        // Event listener for submit button
+        submitBtn.addEventListener('click', () => {
+            // Logic to submit answers
+            const answers = [];
+            for (let i = 1; i <= 5; i++) {
+                const checkElement = document.getElementById(`check${i}`);
+                if (checkElement.checked) {
+                    answers.push(`answer${i}`);
+                }
+            }
+            console.log("Selected answers:", answers); // Example: Output the selected answers
+        });
+    </script>
+</body>
+</html>
