@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollaris - Student</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="join.css">
+
+</head>
+<body>
+    <div class="logo-container">
+		<a href = "../../LandingPage/landingpage.html">
+           <!-- <img src="../../LandingPage/pollaris_logo_black.png" alt="Pollaris Logo" class="logo"> -->
+		</a>
+
+	</div>
+    <div class = "student">
+        <form id = "student-form">
+            <h1>Join A Quiz</h1> <br> <br>
+            <div class ="stud-names">
+                <div class = "names">
+                    <input type="text" id="fname" name="fname" placeholder="First Name" required/>
+                </div>
+                <div class = "names">
+                    <input type="text" id="lname" name="lname" placeholder="Last Name" required/>
+                </div>
+            </div>
+            <div class = "stud-id">
+                <div class="quiz-name">
+                    <input type="text" id="qname" name="qname" placeholder="Quiz Name" required/>
+                </div> 
+                <div class="quiz-code">
+                    <input type="number" id="code" name="code" min="00000" max="99999"required placeholder="Code"/>
+                </div>
+            </div>
+            
+            <br>
+               
+            <button type = "submit" class="button">Join</button>
+
+            <script>
+                document.getElementById("student-form").addEventListener("submit", function(event) {
+                    event.preventDefault(); // Prevent form submission
+                    
+                    // Get quiz name and code entered by the student
+                    const quizName = document.getElementById("qname").value.trim();
+                    const quizCode = document.getElementById("code").value.trim();
+                    const firstName = document.getElementById("fname").value.trim();
+                    const lastName = document.getElementById("lname").value.trim();
+
+                    console.log("First Name:", firstName);
+                    console.log("Last Name:", lastName);
+                    
+                    // Redirect to question page with quiz name and code as URL parameters
+                    window.location.href = `questionpage.html?quizName=${quizName}&quizCode=${quizCode}&fname=${firstName}&lname=${lastName}`;
+                });
+            </script>
+        </form>
+    </div>
+</body>
+</html>

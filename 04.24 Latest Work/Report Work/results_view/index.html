@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Page</title>
+    <link rel="stylesheet" href="submits.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <img src="logo.png" style="height:100px; width:200px;" />
+    <p class="name" style="float:right">Instructor's Name</p>
+
+    <br />
+
+    <center>
+        <p id="question" class="question">Question will be displayed here</p>
+        <br />
+        <br />
+        <div id="chartContainer" style="background-color:white">
+            <br />
+            <br />
+        </div>
+        <button id="submitBtn">Next Question</button>
+    </center>
+    
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDGUnRul8V9HQjbjHqeve6To2np6puXtWE",
+    authDomain: "pollaris-fa5dc.firebaseapp.com",
+    databaseURL: "https://pollaris-fa5dc-default-rtdb.firebaseio.com",
+    projectId: "pollaris-fa5dc",
+    storageBucket: "pollaris-fa5dc.appspot.com",
+    messagingSenderId: "826719629611",
+    appId: "1:826719629611:web:369cf60056d2e4ffd2556e",
+    measurementId: "G-91R1GDZF6L"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+const quizCode = "97198"; // Replace with your quiz code
+const studentName = "Ro_Sh"; // Replace with the student's name
+
+const studentRef = ref(database, `students/${quizCode}/${studentName}/answers`);
+
+let currentQuestion;
+let chartContainer;
+
+// Get elements
+const questionElement = document.getElementById('question');
+
+// Initialize sampleData
+let sampleData = {
+    products: [
+        {
+            "title":"Choice 1",
+            "rating": 0,
+        },
+        {
+            "title":"Choice 2",
+            "rating":0,
+        },
+        {
+            "title":"Choice 3",
+            "rating":0,
+        },
+        {
+            "title":"Choice 4",
+            "rating":0,
+        },
+        {
+            "title":"Choice 5",
+            "rating":0,
+        } 
+    ],
+};
+
+onValue(studentRef, (snapshot) => {
+    const answers = snapshot.val();
+    console.log("Answers:", answers); // Logging the answers object
+    if (answers) {
+        updatePoll(answers, sampleData);
+    }
+});
+
+function updatePoll(answers, sampleData) {
+    // Reset ratings
+    sampleData.products.forEach(product => product.rating = 0);
+
+    // Count the answers
+    Object.keys(answers).forEach(key => {
+        const answer = answers[key];
+        const choiceNumber = parseInt(answer.replace('answer', ''));
+        if (!isNaN(choiceNumber) && choiceNumber >= 1 && choiceNumber <= 5) {
+            sampleData.products[choiceNumber - 1].rating++;
+        }
+    });
+
+    // Update the chart
+    updateChart(sampleData);
+}
+
+function updateChart(sampleData) {
+    // Get the chart container
+    chartContainer = document.getElementById('chartContainer');
+    
+    // Clear previous charts
+    chartContainer.innerHTML = '';
+
+    sampleData.products.forEach((product, index) => {
+        const chartElement = document.createElement('canvas');
+        chartElement.id = `barChart${index + 1}`;
+        chartElement.style.marginBottom = '20px';
+
+        const chartDiv = document.createElement('div');
+        chartDiv.className = 'questionTemplate';
+        chartDiv.style.backgroundColor = 'white';
+        chartDiv.innerHTML = `<br /><br /><h2>Question ${index + 1}</h2>`;
+        chartDiv.appendChild(chartElement);
+        chartContainer.appendChild(chartDiv);
+
+        const ctx = chartElement.getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: sampleData.products.map((product, i) => `Choice ${i + 1}`),
+                datasets: [{
+                    label: 'Choices',
+                    data: sampleData.products.map(product => product.rating),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+}
+
+</script>
+</body>
+</html>
