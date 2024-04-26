@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Page</title>
+    <link rel="stylesheet" href="submits.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <img src="logo.png" style="height:100px; width:200px;" />
+    <p class="name" style="float:right">Instructor's Name</p>
+
+    <br />
+
+    <center>
+        <div id="questions"></div>
+    </center>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDGUnRul8V9HQjbjHqeve6To2np6puXtWE",
+            authDomain: "pollaris-fa5dc.firebaseapp.com",
+            databaseURL: "https://pollaris-fa5dc-default-rtdb.firebaseio.com",
+            projectId: "pollaris-fa5dc",
+            storageBucket: "pollaris-fa5dc.appspot.com",
+            messagingSenderId: "826719629611",
+            appId: "1:826719629611:web:369cf60056d2e4ffd2556e",
+            measurementId: "G-91R1GDZF6L"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const quizCode = "97198"; //urlParams.get("quizCode");
+
+        const studentRef = ref(database, `students/${quizCode}`);
+
+        let students;
+
+        // Get elements
+        const questionsElement = document.getElementById('questions');
+
+        onValue(studentRef, (snapshot) => {
+            const studentData = snapshot.val();
+            console.log("studentData:", studentData);
+            if (studentData) {
+                students = studentData;
+                displayQuestions();
+            }
+        });
+
+        function displayQuestions() {
+    for (const questionId in students) {
+        const questionElementId = `question_${questionId}`;
+        let questionElement = document.getElementById(questionElementId);
+        if (!questionElement) {
+            questionElement = document.createElement('div');
+            questionElement.id = questionElementId;
+            questionElement.innerHTML = `<p class="question">${questionId}</p><div id="chart_${questionId}"></div>`;
+            questionsElement.appendChild(questionElement);
+        }
+        displayQuestion(questionId);
+    }
+}
+
+function displayQuestion(questionId) {
+    const questionData = students[questionId];
+    let studentsCount = {
+        'answer1': 0,
+        'answer2': 0,
+        'answer3': 0,
+        'answer4': 0,
+        'answer5': 0
+    };
+
+    for (const studentId in questionData) {
+        const answers = questionData[studentId].answers;
+        answers.forEach(answer => {
+            studentsCount[answer]++;
+        });
+    }
+
+    google.charts.load('current', {
+        packages: ['bar'],
+        callback: () => {
+            const data = new google.visualization.DataTable();
+            data.addColumn('string', 'Choice');
+            data.addColumn('number', 'Number of Times Picked');
+
+            for (let i = 1; i <= 5; i++) {
+                data.addRow([`answer${i}`, studentsCount[`answer${i}`]]);
+            }
+
+            const chartElement = document.getElementById(`chart_${questionId}`);
+            const existingChart = chartElement && chartElement.getElementsByTagName('svg').length > 0;
+
+            if (existingChart) {
+                const chart = new google.charts.Bar(chartElement);
+                chart.draw(data, google.charts.Bar.convertOptions({
+                    width: 600,
+                    height: 400,
+                }));
+            } else {
+                const columnChart = new google.charts.Bar(chartElement);
+                columnChart.draw(data, google.charts.Bar.convertOptions({
+                    width: 600,
+                    height: 400,
+                }));
+            }
+        }
+    });
+}
+
+    </script>
+</body>
+</html>
