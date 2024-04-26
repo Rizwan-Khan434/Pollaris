@@ -1,0 +1,20 @@
+body {
+  background: whitesmoke;
+}
+
+.question
+{
+  font-family:'Arial Rounded MT';
+  font-size: 2.25rem;
+}
+
+.answer {
+  width: 500px;
+  height: 25px;
+  border: solid 1px black;
+  line-height:25px;
+}
+
+table {
+  border: 0;
+}
