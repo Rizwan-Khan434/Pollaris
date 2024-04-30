@@ -1,0 +1,87 @@
+html {
+    height:100%;
+}
+
+body {
+    /*background: rgba(131, 47, 135, 0.956);*/
+    margin: 0 auto;
+    height: 100%;
+    background: url('try.jpg');
+    backdrop-filter: blur(14px);
+    /*max-width: 80rem;*/
+}
+
+.question
+{
+    font-family:'Arial Rounded MT';
+    font-size: 2.2rem;
+    color:white;
+}
+.page {
+    background: url('bgquiz1.png');
+    padding: 30px 50px;
+    width: 500px;
+    height: 480px;
+    justify-content: center;
+    align-items: center;
+    margin:auto;
+    border-radius: 20px;
+}
+.answer {
+    width: 400px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    line-height:25px;
+    background-color: rgb(238, 232, 238);
+    color:rgb(155, 37, 202);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 0.7em;
+
+}
+.questionTemplate input {
+    color:rgb(238, 232, 238);
+}
+table {
+    border: 0;
+}
+.name {
+    padding-right: 25px;
+    padding-top: 20px;
+    font-style:normal;
+    font-size: 23px;
+    font-weight: bold;
+    color:rgb(21, 2, 2);
+}
+[type=checkbox] {
+    width: 2rem;
+    height: 1.8rem;
+    color:dodgerblue;
+    vertical-align: middle;
+    background: rgb(21, 2, 2);
+    border: 1px solid rgb(185, 203, 224);
+    outline: 0;
+    flex-grow: 0;
+    border-radius: 50%;
+    background-color: #211a1a;
+    transition: background 300ms;
+    cursor: pointer;
+}
+.page .submitBtn {
+    width: 20%;
+    margin: auto;
+    color: rgb(155, 37, 202);
+    height:40px;
+    background:rgb(238, 232, 238);
+    border:none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #000;
+    font-size: 17px; 
+   /* font-weight: bold;   */
+}
+.submitBtn:hover {
+    cursor: pointer;
+    box-shadow: 0 0.4rem 1.4rem 0 rgb(152, 148, 148);
+    transform: translateY(-0.1rem);
+    transition: transform 150ms;
+}

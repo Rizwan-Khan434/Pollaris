@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Page</title>
+    <link rel="stylesheet" href="questionpage.css">
+    <script src="questionpage.js"></script>
+</head>
+<body>
+    <div class="background">
+        <div class="header">
+            <img src="pollaris_logo_black.png" style="height:100px; width:200px;" />
+            <p class="name" id="name" style="float:right"></p>
+        </div>
+        <br />
+        <br />
+        <br />
+        <div id="page" class="page">
+            <center>
+                <p class="question" id="question">You entered the wrong quiz name or quiz code. Please try again.</p>
+                <div class="questionTemplate">
+                    <table>
+                        <tr>
+                            <td><center><p class="answer" id="answer1" onclick="click1()"></p></center></td>
+                            <td><input type="checkbox" id="check1"></td>
+                        </tr>
+                        <tr>
+                            <td><center><p class="answer" id="answer2" onclick="click2()"></p></center></td>
+                            <td><input type="checkbox" id="check2" style="color:rgb(238, 232, 238);"></td>
+                        </tr>
+                        <tr>
+                            <td><center><p class="answer" id="answer3" onclick="click3()"></p></center></td>
+                            <td><input type="checkbox" id="check3"></td>
+                        </tr>
+                        <tr>
+                            <td><center><p class="answer" id="answer4" onclick="click4()"></p></center></td>
+                            <td><input type="checkbox" id="check4"></td>
+                        </tr>
+                        <tr>
+                            <td><center><p class="answer" id="answer5" onclick="click5()"></p></center></td>
+                            <td><input type="checkbox" id="check5"></td>
+                        </tr>
+                    </table>
+                    <br>
+                </div>
+            </center>
+            <div>
+                <button id="submitBtn" class="submitBtn">Submit</button>
+                <!--<button id="get-next">Next</button>-->
+            </div>
+        </div>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyDGUnRul8V9HQjbjHqeve6To2np6puXtWE",
+            authDomain: "pollaris-fa5dc.firebaseapp.com",
+            databaseURL: "https://pollaris-fa5dc-default-rtdb.firebaseio.com",
+            projectId: "pollaris-fa5dc",
+            storageBucket: "pollaris-fa5dc.appspot.com",
+            messagingSenderId: "826719629611",
+            appId: "1:826719629611:web:369cf60056d2e4ffd2556e",
+            measurementId: "G-91R1GDZF6L"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+    
+        const urlParams = new URLSearchParams(window.location.search);
+        const firstName = urlParams.get("fname");
+        console.log(firstName);
+        const lastName = urlParams.get("lname");
+        console.log(lastName);
+        const quizName = urlParams.get("quizName");
+        const quizCode = urlParams.get("quizCode");
+
+        window.onload = function() {
+            document.getElementById("name").innerHTML = firstName + " " + lastName;
+            document.getElementById("quiz").innerHTML = quizName;
+        }
+    
+        let questions;
+        let currentQuestionIndex = 0;
+    
+        const quizRef = ref(database, `quizzes/${quizCode}`);
+        
+        onValue(quizRef, (snapshot) => {
+            const quizData = snapshot.val();
+            if (quizData && quizData[quizName] && quizData[quizName].questions) {
+                questions = Object.values(quizData[quizName].questions);
+                displayQuestion(questions[currentQuestionIndex]);
+            }
+        });
+    
+        document.getElementById("submitBtn").addEventListener("click", () => {
+            const answers = [];
+            for (let j = 1; j <= 5; j++) {
+                const checkElement = document.getElementById(`check${j}`);
+                if (checkElement.checked) {
+                    answers.push(`answer${j}`);
+                }
+            }
+            saveAnswerForCurrentQuestion(quizName, quizCode, questions[currentQuestionIndex].questionText, answers);
+            alert("Submitted!");
+
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion(questions[currentQuestionIndex]);
+            } else {
+                document.getElementById("page").innerHTML = `
+                <div class="done" style="font-family:Arial Rounded MT; font-size = 4rem; justify-content:center;align-items:center;
+                    margin:auto;paddding:250px 0;text-align:center;display:flex;color:white;">
+                    Done!
+                </div>`;
+            }
+        });
+    
+        function displayQuestion(question) {
+            document.getElementById("question").textContent = question.questionText;
+            for (let j = 1; j <= 5; j++) {
+                const answerElement = document.getElementById(`answer${j}`);
+                const checkElement = document.getElementById(`check${j}`);
+                if (answerElement && checkElement) {
+                    const answerKey = `answer${j}`;
+                    answerElement.textContent = question.answers[answerKey].text;
+                    checkElement.checked = false;
+                }
+            }
+        }
+    
+        function saveAnswerForCurrentQuestion(quizName, quizCode, questionText, answers) {
+            const studentRef = ref(database, `students/${quizCode}/${questionText}`);
+            push(studentRef, {
+                answers: answers
+            }).then(() => {
+                console.log("Answer for question stored successfully!");
+            }).catch((error) => {
+                console.error("Error storing answer for question:", error);
+            });
+        }
+    </script>
+    </div>
+</body>
+</html>
