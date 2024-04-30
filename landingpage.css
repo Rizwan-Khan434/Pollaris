@@ -1,0 +1,81 @@
+body, html {
+    margin: 0;
+    padding: 0;
+	height:100%;
+    box-sizing: "border-box";
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.backdrop {
+	background:url('img_01.jpg') no-repeat;
+	filter: blur(5px);
+	-webkit-filter: blur(5px);
+	height:100%;
+	background-position: center;
+	background-size: cover;
+}
+.main {
+	position:absolute;
+	z-index:2;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+.main .user {
+	margin-right: 48%;
+}
+.logo {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 180px;
+  height:150px;
+}
+body {
+	text-align: center;
+}
+.head {
+	text-align: center;
+	color:rgb(246, 244, 247);
+	margin-top:5%;
+	font-weight:bold;
+	font-size:1.5rem;
+}
+button {
+	height: 155px;
+	width: 185px;
+	font-size: 1rem;
+	margin: auto;
+    display: block;
+	padding-right: 5px;
+	color:rgb(44, 5, 81);
+	background-color: white;
+	border-radius: 12px;
+	box-shadow: 0 0 10px rgba(208, 178, 236, 0.851);
+	outline: none;
+	font-weight: none;
+	border: 1px solid rgba(208, 178, 236, 0.851);
+}
+.user-button:hover {
+	border: 5px solid rgba(208, 178, 236, 0.851); 
+	box-shadow: 0 0 35px rgba(208, 178, 236, 0.851);
+}
+.buttons {
+	display: flex;
+	margin: auto;
+	justify-content: center;
+	align-items: center;
+	margin-top:10%;
+}
+.user .user-button .user-image {
+	display: block;
+	height: 200px;
+	width: 110px;
+	height:110px;
+	margin: auto;
+}
+.user {
+	position: relative;
+	width: 15%;
+	margin: 0% 5%;
+	padding-right: 0px;
+}
