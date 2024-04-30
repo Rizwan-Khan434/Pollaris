@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pollaris</title>
+  <link rel="stylesheet" href="WorkingStyles.css">
+</head>
+
+<body>
+  <nav>
+    <img src="pollaris_logo_black.png" alt="logo" class="logo">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Docs</a></li>
+    </ul>
+  </nav>
+  <div class="update" id="blurry">
+    <div class="content">
+      <div class="profile-container">
+        <div class="profile">
+          <img src="profile.png" alt="profile picture">
+          <div class="profile-label">
+            <strong class="instructor">Scott Jeffreys</strong>
+          </div>
+          <hr>
+          <!--div id="profile-opts"-->
+            <button class="profile-button" onclick="blurPage()">Host Quiz</button>
+            <button class="profile-button">Past Reports</button>
+            <button class="profile-button">Docs</button>
+            <button class="profile-button">Settings</button>
+            <button class="profile-button">Sign Out</button>
+          <!--/div-->
+        </div>
+      </div>
+      <div class="wrapper" id="make-blur">
+        <h2>Recent Quizzes</h2>
+        <br>
+        <div class="quiz-box">
+          <div class="quiz-name">
+            <input type="text" id="uname" name = "uname" value="Sample Quiz" required>
+          </div>
+          <div class="options">
+            <button class="opt-btn" name="edit" onclick="window.location.href = 'quizStoreHTML.html';">Edit</button> 
+            <button class="opt-btn" name="go-live" onclick="">Go Live</button> 
+            <button class="opt-btn" name="copy-code" onclick="">Copy Code</button>
+          </div> 
+        </div>
+        <div class="quiz-box">
+          <button class="new-quiz" name="create-quiz" onclick="window.location.href = 'quizStoreHTML.html';">Create Quiz</button> 
+        </div> 
+      </div>
+    </div>
+    <div style="visibility: hidden;">
+      <h2> Here is your quiz code!</h2>              
+      <div class="code" id="code"></div>
+      <button class="copy" name="copy" onclick="blurPage()">Close</button> 
+    </div>
+    <br>
+  </div>
+  <center>
+  <div class="popup" id="pop-up">
+    
+      <p>Enter quiz code to host</p>
+      <br>
+      <input type="text" id="quizCode" class="quizCode" placeholder="12345" required>
+      <br>
+      <button onclick="host()" class="btn">Host</button>
+    
+  </div> 
+</center>
+
+<script>
+//document.getElementById("quizCode").addEventListener("text", function(event) {
+//event.preventDefault(); // Prevent form submission
+
+function host()
+{
+  const quizCode = document.getElementById("quizCode").value.trim();
+  console.log(quizCode);
+  window.location.href = `index.html?quizCode=${quizCode}`;
+}
+</script>
+  <script src="work.js"></script>
+</body>
+</html>
